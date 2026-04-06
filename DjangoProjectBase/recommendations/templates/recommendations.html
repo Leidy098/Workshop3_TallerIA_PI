@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <form action="">
+        <div class="mb-3">
+            <label for="recommendationPrompt" class="form-label">
+                Recommendation Prompt:
+            </label>
+            <input
+                type="text"
+                class="form-control"
+                name="recommendationPrompt"
+                placeholder="Ejemplo: Pelicula de la segunda guerra mundial"
+                value="{{ recommendation_prompt }}"
+            />
+        </div>
+        <button type="submit" class="btn btn-primary">Recommend</button>
+    </form>
+
+    {% if recommendation_prompt %}
+        <p class="mt-3">Prompt: {{ recommendation_prompt }}</p>
+    {% endif %}
+
+    {% if error_message %}
+        <div class="alert alert-warning mt-3" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    {% if recommended_movie %}
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ recommended_movie.image.url }}" class="card-img-top" alt="{{ recommended_movie.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ recommended_movie.title }}</h5>
+                        <p class="card-text">{{ recommended_movie.description }}</p>
+                        <p class="card-text">{{ recommended_movie.genre }}</p>
+                        <p class="card-text">{{ recommended_movie.year }}</p>
+                        {% if recommended_movie.url %}
+                            <a href="{{ recommended_movie.url }}" class="btn btn-primary">Movie Link</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content %}
